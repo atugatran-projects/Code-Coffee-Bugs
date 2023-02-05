@@ -1,0 +1,13 @@
+{
+	"name": "coder_coffee_and_bugs",
+	"scripts": {
+		"build": "esbuild --bundle src/main.js --outfile=www/main.js --minify",
+		"dev": "esbuild --bundle src/main.js --outfile=www/main.js --servedir=www"
+	},
+	"dependencies": {
+		"kaboom": "^2000.2.10"
+	},
+	"devDependencies": {
+		"esbuild": "^0.17.5"
+	}
+}
