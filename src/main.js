@@ -7,19 +7,13 @@ document.title = "Coder, Coffee and Bugs";
 kaboom({
 	font: "sink",
 	background: [210, 210, 155],
+	scale: 0.8,
 });
-
-
 
 // Lets load the Sprites
 loadSprite("bug", "sprites/bug.png");
 loadSprite("programmer", "sprites/programmer.png");
 loadSprite("coffee", "sprites/coffee.png");
-loadSprite("up", "sprites/btntop.png");
-loadSprite("left", "sprites/btnleft.png");
-loadSprite("right", "sprites/btnright.png");
-loadSprite("down", "sprites/btnbottom.png");
-loadSprite("btna", "sprites/btna.png");
 
 // Lets load the Music
 loadSound("background", "sounds/background.mp3");
@@ -48,40 +42,34 @@ scene("game", () => {
 			color(10, 10, 255),
 		]);
 	};
-
-	// Lets define a function to display our Buttons
-
-	const upbtn = add([
-		sprite("up"), // renders as a sprite
-		pos(150, height() - 250),
-		opacity(0.5),
-		fixed(),
-		area(),
-	]);
-
-	const leftbtn = add([
-		sprite("left"),
-		pos(60, height() - 170),
-		opacity(0.5),
-		fixed(),
-		area(),
-	]);
-
-	const rightbtn = add([
-		sprite("right"),
-		pos(235, height() - 170),
-		opacity(0.5),
-		fixed(),
-		area(),
-	]);
-
-	const downbtn = add([
-		sprite("down"),
-		pos(150, height() - 100),
-		opacity(0.5),
-		fixed(),
-		area(),
-	]);
+	const Controls = () => {
+		// start
+		start = add([
+			text("click the SCREEN"),
+			// opacity(0.6),
+			scale(3),
+			pos(40, 21),
+			fixed(),
+			color(0, 0, 0),
+		]);
+		// A btn
+		A = add([
+			text("(A)    reset"),
+			// opacity(0.6),
+			scale(3),
+			pos(40, 50),
+			fixed(),
+			color(0, 0, 0),
+		]);
+		// Arrow btn
+		Arrow = add([
+			text("(Arrow keys) start"),
+			// opacity(0.8),
+			scale(3),
+			pos(40, 80),
+			color(0, 0, 0),
+		]);
+	};
 
 	// Lets define a function for Buttons
 
@@ -92,76 +80,14 @@ scene("game", () => {
 		down: false,
 	};
 
-	onTouchStart((id, pos) => {
-		if (upbtn.hasPoint(pos)) {
-			KeyDown.up = true;
-			upbtn.opacity = 1;
-			// onUpdate(() =>{
-			up();
-			// })
-		} else if (leftbtn.hasPoint(pos)) {
-			KeyDown.left = true;
-			leftbtn.opacity = 1;
-			left();
-		} else if (rightbtn.hasPoint(pos)) {
-			KeyDown.right = true;
-			rightbtn.opacity = 1;
-			right();
-		} else if (downbtn.hasPoint(pos)) {
-			KeyDown.down = true;
-			downbtn.opacity = 1;
-			down();
-		}
-	});
-
-	const onTouchChanged = (_, pos) => {
-		if (!upbtn.hasPoint(pos)) {
-			KeyDown.up = false;
-			upbtn.opacity = 0.5;
-		} else {
-			KeyDown.up = true;
-			upbtn.opacity = 1;
-			up();
-		}
-
-		if (!leftbtn.hasPoint(pos)) {
-			KeyDown.left = false;
-			leftbtn.opacity = 0.5;
-		} else {
-			KeyDown.left = true;
-			leftbtn.opacity = 1;
-			left();
-		}
-
-		if (!rightbtn.hasPoint(pos)) {
-			KeyDown.right = false;
-			rightbtn.opacity = 0.5;
-		} else {
-			KeyDown.right = true;
-			rightbtn.opacity = 1;
-			right();
-		}
-
-		if (!downbtn.hasPoint(pos)) {
-			KeyDown.down = false;
-			downbtn.opacity = 0.5;
-		} else {
-			KeyDown.down = true;
-			downbtn.opacity = 1;
-			down();
-		}
-	};
-
-	onTouchMove(onTouchChanged);
-	onTouchEnd(onTouchChanged);
-
 	// Lets define a function to play background music
 	const playBg = () => {
 		if (!bg) {
 			backgroundMusic = play("background", { volume: 0.5, loop: true });
+			volume(1)
 			bg = true;
 			bugs();
-			btna()
+			// btna()
 		}
 	};
 
@@ -274,44 +200,23 @@ scene("game", () => {
 		destroy(coffee);
 		SCORE += 1;
 		displayScore();
+		Controls()
 		// 2 seconds until the volume is back
 		wait(2, () => {
 			backgroundMusic.volume(0.5);
 		});
 	});
 
-
-	// lets function of btnA
-	const btna = () => {
-		const Addbtna = add([
-			sprite("btna"),
-			pos(width() - 200, height() - 170),
-			opacity(0.5),
-			fixed(),
-			area(),
-		]);
-
-		onTouchStart((id, pos) => {
-			if (Addbtna.hasPoint(pos)) {
-				backgroundMusic.volume(0.0);
-				go("game")
-				if (volume = 'undefined') {
-					backgroundMusic.volume(0.0);
-					go("game")
-				}
-			}
-		})
-
-		onKeyPress("a", () => {
-			backgroundMusic.volume(0.0);
-			go("game")
-		})
-	}
+	onKeyPress("a", () => {
+		volume(0)
+		go("game")
+	})
 	// Display the score
 	displayScore();
+	Controls()
 });
-// After GameOver
 
+// After GameOver
 scene("lose", (SCORE) => {
 	add([
 		sprite("programmer"),
@@ -328,22 +233,31 @@ scene("lose", (SCORE) => {
 		origin("center"),
 	]);
 
-	const btna = add([
-		sprite("btna"),
-		pos(60, height() - 170),
-		opacity(0.5),
-		fixed(),
-		area(),
-	]);
+	const Controls = () => {
+		// A btn
+		A = add([
+			text("(A)    reset"),
+			// opacity(0.6),
+			scale(3),
+			pos(40, 21),
+			fixed(),
+			color(0, 0, 0),
+		]);
+		// Arrow btn
+		Arrow = add([
+			text("(Arrow keys) start"),
+			// opacity(0.8),
+			scale(3),
+			pos(40, 50),
+			color(0, 0, 0),
+		]);
+	};
+	Controls()
 
-	onTouchStart((id, pos) => {
-		if (btna.hasPoint(pos)) {
-			go("game")
-		}
-	})
 	// go back to game with space is pressed
 	onKeyPress("a", () => go("game"))
 	onClick(() => go("game"))
 });
 
 go("game")
+
