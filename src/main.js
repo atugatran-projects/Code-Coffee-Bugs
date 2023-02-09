@@ -1,4 +1,5 @@
 import kaboom from "kaboom";
+import {Controls} from "./allFunc";
 
 // Setting a title for the page
 document.title = "Coder, Coffee and Bugs";
@@ -41,43 +42,6 @@ scene("game", () => {
 			pos(width() - 181, 21),
 			color(10, 10, 255),
 		]);
-	};
-	const Controls = () => {
-		// start
-		start = add([
-			text("click the SCREEN"),
-			// opacity(0.6),
-			scale(3),
-			pos(40, 21),
-			fixed(),
-			color(0, 0, 0),
-		]);
-		// A btn
-		A = add([
-			text("(A)    reset"),
-			// opacity(0.6),
-			scale(3),
-			pos(40, 50),
-			fixed(),
-			color(0, 0, 0),
-		]);
-		// Arrow btn
-		Arrow = add([
-			text("(Arrow keys) start"),
-			// opacity(0.8),
-			scale(3),
-			pos(40, 80),
-			color(0, 0, 0),
-		]);
-	};
-
-	// Lets define a function for Buttons
-
-	const KeyDown = {
-		up: false,
-		left: false,
-		right: false,
-		down: false,
 	};
 
 	// Lets define a function to play background music
@@ -139,6 +103,10 @@ scene("game", () => {
 	onKeyDown("up", up);
 
 	onKeyDown("down", down);
+
+	onKeyPress("f", () => {
+		fullscreen(!fullscreen())
+	})
 
 	// Lets add 4 bugs and a coffee on loop
 	const bugs = () => {
@@ -233,25 +201,6 @@ scene("lose", (SCORE) => {
 		origin("center"),
 	]);
 
-	const Controls = () => {
-		// A btn
-		A = add([
-			text("(A)    reset"),
-			// opacity(0.6),
-			scale(3),
-			pos(40, 21),
-			fixed(),
-			color(0, 0, 0),
-		]);
-		// Arrow btn
-		Arrow = add([
-			text("(Arrow keys) start"),
-			// opacity(0.8),
-			scale(3),
-			pos(40, 50),
-			color(0, 0, 0),
-		]);
-	};
 	Controls()
 
 	// go back to game with space is pressed
